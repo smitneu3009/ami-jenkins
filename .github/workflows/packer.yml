@@ -2,7 +2,7 @@ name: Build Jenkins AMI
 
 on:
   push:
-    branches:
+    branches: #
       - main  # Triggers the workflow on a push to the main branch
 
 jobs:
