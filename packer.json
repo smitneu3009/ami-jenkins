@@ -10,7 +10,7 @@
         "access_key": "{{user `aws_access_key`}}",
         "secret_key": "{{user `aws_secret_key`}}",
         "region": "{{user `region`}}",
-        "source_ami": "ami-0c55b159cbfafe1f0",
+        "source_ami": "ami-03e31863b8e1f70a5",
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
         "ami_name": "jenkins-ami-{{timestamp}}",
