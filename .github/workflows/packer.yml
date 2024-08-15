@@ -3,18 +3,27 @@ name: Build Jenkins AMI
 on:
   push:
     branches:
-      - main
+      - main  # Triggers the workflow on a push to the main branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # The build runs on the latest Ubuntu environment
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  # This action checks out your repository so the workflow can access the code
 
-      - name: Set up Packer
-        uses: hashicorp/setup-packer@v1
+      - name: Install Packer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget https://releases.hashicorp.com/packer/1.9.0/packer_1.9.0_linux_amd64.zip
+          unzip packer_1.9.0_linux_amd64.zip
+          sudo mv packer /usr/local/bin/
 
       - name: Run Packer build
-        run: packer build -var "aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var "aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" packer.json
+        run: |
+          packer build \
+            -var "aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
+            -var "aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
+            packer.json  # This command runs the Packer build using the JSON file and the AWS credentials stored in GitHub secrets
